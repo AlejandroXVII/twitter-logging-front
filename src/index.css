@@ -1,0 +1,182 @@
+/*RESET*/
+body {
+	line-height: 1;
+	margin: 0;
+	html,
+	body,
+	div,
+	span,
+	applet,
+	object,
+	iframe,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p,
+	blockquote,
+	pre,
+	a,
+	abbr,
+	acronym,
+	address,
+	big,
+	cite,
+	code,
+	del,
+	dfn,
+	em,
+	img,
+	ins,
+	kbd,
+	q,
+	s,
+	samp,
+	small,
+	strike,
+	strong,
+	sub,
+	sup,
+	tt,
+	var,
+	b,
+	u,
+	i,
+	center,
+	dl,
+	dt,
+	dd,
+	ol,
+	ul,
+	li,
+	fieldset,
+	form,
+	label,
+	legend,
+	table,
+	caption,
+	tbody,
+	tfoot,
+	thead,
+	tr,
+	th,
+	td,
+	article,
+	aside,
+	canvas,
+	details,
+	embed,
+	figure,
+	figcaption,
+	footer,
+	header,
+	hgroup,
+	menu,
+	nav,
+	output,
+	ruby,
+	section,
+	summary,
+	time,
+	mark,
+	audio,
+	video {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		vertical-align: baseline;
+	}
+	/* HTML5 display-role reset for older browsers */
+	article,
+	aside,
+	details,
+	figcaption,
+	figure,
+	footer,
+	header,
+	hgroup,
+	menu,
+	nav,
+	section {
+		display: block;
+	}
+	ol,
+	ul {
+		list-style: none;
+	}
+	blockquote,
+	q {
+		quotes: none;
+	}
+	blockquote:before,
+	blockquote:after,
+	q:before,
+	q:after {
+		content: "";
+		content: none;
+	}
+	table {
+		border-collapse: collapse;
+		border-spacing: 0;
+	}
+	button {
+		border: 0;
+		font-weight: bold;
+	}
+}
+
+:root {
+	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	--clr: 273;
+	--clr-principal: hsl(var(--clr), 100%, 5%);
+	--clr-secondary: hsl(var(--clr), 100%, 50%);
+	--clr-tertiary: hsl(var(--clr), 0%, 98%);
+
+	--clr-secondary-bright: hsl(var(--clr), 100%, 70%);
+	--clr-tertiary-bright: hsl(var(--clr), 100%, 100%);
+
+	--clr-secondary-dark: hsl(var(--clr), 100%, 15%);
+	--clr-tertiary-dark: hsl(var(--clr), 0%, 92%);
+
+	--clr-accept: hsl(151, 100%, 65%);
+
+	--little-shadow: 3px 3px 5px hsl(0, 0%, 0%, 0.2);
+	--medium-shadow: 5px 5px 5px hsl(0, 0%, 0%, 0.2);
+	--big-shadow: 10px 10px 5px hsl(0, 0%, 0%, 0.2);
+
+	--radius: 10%;
+}
+
+body {
+	max-width: 100dvw;
+	min-height: 100dvh;
+	header {
+	}
+	main {
+	}
+	footer {
+	}
+	* {
+		.icon-button {
+			background-color: transparent;
+			padding: 0;
+		}
+		button {
+			color: var(--clr-principal);
+			background-color: var(--clr-tertiary-bright);
+			padding: 0.5rem 1.5rem;
+			font-size: 1rem;
+		}
+		button:hover {
+			outline: 2px solid var(--clr-principal);
+		}
+		.savedBtn {
+			background: var(--clr-accept);
+		}
+	}
+	#root {
+		min-height: 100dvh;
+	}
+}

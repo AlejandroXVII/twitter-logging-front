@@ -1,0 +1,122 @@
+.message-box {
+	--border: 1.75px solid #cecece;
+	background-color: var(--clr-tertiary);
+	min-height: 100dvh;
+	min-width: 100dvw;
+	overflow: hidden;
+	display: grid;
+	grid-template-columns: 1fr 2fr;
+	.header {
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		align-items: center;
+		align-content: center;
+		gap: 0.5rem;
+		border-right: var(--border);
+	}
+	.sidebar {
+		min-height: inherit;
+		background-color: #ffffff;
+		.all-user-container {
+			padding: 1rem;
+			display: flex;
+			flex-flow: column;
+			gap: 0.5rem;
+		}
+		.user-container {
+			display: grid;
+			grid-template-columns: auto 1fr;
+			gap: 0.5rem;
+			align-items: center;
+			padding: 0.5rem;
+			p {
+				font-weight: bold;
+				font-size: 1.5rem;
+			}
+		}
+		.user-container:not(:last-child) {
+			border-bottom: var(--border);
+		}
+		.user-container:hover {
+			background-color: #eeeeee;
+		}
+	}
+	.text-box {
+		background-color: #f0f4f5;
+		display: grid;
+		grid-auto-flow: column;
+		grid-template-rows: auto 1fr auto;
+		max-height: 100dvh;
+		.messages {
+			background-color: #f0f4f5;
+			padding: 1rem;
+			max-height: calc(100dvh-5rem);
+			overflow-y: auto;
+			bottom: 0;
+			display: grid;
+
+			scroll-snap-type: y mandatory;
+			.all-message-container {
+				display: grid;
+				width: 100%;
+				max-height: fit-content;
+				gap: 0.5rem;
+				bottom: 0;
+				justify-items: end;
+				align-content: end;
+				.message-container {
+					width: fit-content;
+					max-width: 90%;
+					height: fit-content;
+					padding: 0.5rem;
+					border-radius: 0.5rem;
+					background-color: rgb(152, 126, 223);
+				}
+				.received {
+					background-color: rgb(211, 211, 211);
+					justify-self: start;
+				}
+				.default {
+					background-color: rgb(211, 211, 211);
+					justify-self: center;
+				}
+			}
+		}
+		.send-messages {
+			display: grid;
+			grid-template-columns: 1fr auto;
+			gap: 0.5rem;
+			padding: 1rem 1rem;
+			border-top: var(--border);
+			input {
+				border-radius: 1rem;
+				border: 0;
+				padding: 0rem 1rem;
+				border: var(--border);
+			}
+		}
+	}
+	.no-chat {
+		display: flex;
+		align-content: center;
+		justify-content: center;
+		align-items: center;
+		color: #b3b3b3;
+	}
+	.icon {
+		display: flex;
+		align-content: center;
+		justify-content: center;
+		svg {
+			min-height: 2.5rem;
+			max-height: 3rem;
+			fill: var(--clr-secondary-dark);
+		}
+	}
+	.bar {
+		min-height: 2.5rem;
+		padding: 0.5rem;
+		border-bottom: var(--border);
+		background-color: #eeeeee;
+	}
+}
