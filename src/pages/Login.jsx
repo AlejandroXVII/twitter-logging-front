@@ -3,6 +3,7 @@ import "../styles/form.css";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import API_URL from "../assets/api-url";
+import { Logo, GoogleIcon } from "../assets/icons";
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -29,26 +30,32 @@ const Login = () => {
 		return; // parses JSON response into native JavaScript objects
 	}
 	return (
-		<div className="container">
+		<div className="container login-container">
+			<div className="big-logo">
+				<Logo class="logo" />
+			</div>
 			<div className="form">
-				<h1>Login</h1>
-				<form
-					action="POST"
-					onSubmit={(e) => {
-						e.preventDefault();
-						loginUser(e.target);
-					}}
-				>
-					<label htmlFor="username">Username</label>
-					<input name="username" type="text" required />
-					<label htmlFor="password">Password</label>
-					<input name="password" type="password" required />
-					<button>Submit</button>
-				</form>
-				<p>
-					You do not have an account? You can
-					<Link to={"/sign-up"}> Sign-up</Link>
+				<Logo class="logo" />
+				<h1>Happening now</h1>
+				<h2>Join today.</h2>
+				<button className="login-button">
+					<GoogleIcon class="button-icon" />
+					Sign up with Google
+				</button>
+				<p className="text-center">or</p>
+				<button className="login-button principal-button">
+					Create account
+				</button>
+				<p className="tiny-text">
+					By signing up, you agree to the{" "}
+					<a href="">Terms of Service</a> and{" "}
+					<a href="">Privacy Policy</a>, including{" "}
+					<a href="">Cookie Use.</a>
 				</p>
+				<p>
+					<b>Already have an account?</b>
+				</p>
+				<button className="login-button">Sign in</button>
 			</div>
 		</div>
 	);

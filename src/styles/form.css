@@ -1,33 +1,67 @@
-#root {
-	background-color: #e5e5f7;
-	background: linear-gradient(135deg, #a98fb355 25%, transparent 25%) -10px 0/
-			20px 20px,
-		linear-gradient(225deg, #a98fb3 25%, transparent 25%) -10px 0/ 20px 20px,
-		linear-gradient(315deg, #a98fb3 25%, transparent 25%) 0px 0/ 20px 20px,
-		linear-gradient(45deg, #a98fb3 25%, #e5e5f7 25%) 0px 0/ 20px 20px;
-}
-
-#root .container {
+.login-container {
 	--clr: hsl(273, 100%, 12%);
 	min-height: inherit;
 	display: flex;
 	align-content: center;
 	justify-content: center;
 	flex-wrap: wrap;
+	.big-logo {
+		background-color: var(--clr-principal);
+		min-height: inherit;
+		display: flex;
+		align-content: center;
+		justify-content: center;
+		.logo {
+			fill: var(--clr-white);
+		}
+	}
+	div:not(.big-logo) .logo {
+		max-height: 4rem;
+	}
+	.login-button {
+		color: var(--clr-black);
+		border: 1px solid var(--clr-light-gray);
+		border-radius: 2rem;
+	}
+	.login-button.principal-button {
+		background-color: var(--clr-principal);
+		color: var(--clr-white);
+		border: none;
+	}
+	.tiny-text {
+		font-size: 0.8rem;
+		color: var(--clr-dark-gray);
+		a {
+			text-decoration: none;
+			color: var(--clr-principal);
+		}
+	}
+	div {
+		padding: 0 10%;
+	}
 }
-.container .form {
-	padding: 2rem;
+
+.login-container {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	align-items: center;
+}
+.login-container .form {
 	display: flex;
 	flex-flow: column;
-	align-items: center;
 	background-color: var(--clr-tertiary);
-	gap: 1rem;
-	box-shadow: var(--medium-shadow);
-	border-radius: 1rem;
-	border: 5px solid white;
+	gap: 1.5rem;
+	max-width: 350px;
+	h1,
+	h2 {
+		text-align: start;
+		color: var(--clr-black);
+	}
 	h1 {
-		text-align: center;
-		color: var(--clr);
+		font-size: 2.5rem;
+	}
+	h2 {
+		font-size: 2rem;
 	}
 	form {
 		display: grid;
