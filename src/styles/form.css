@@ -22,6 +22,10 @@
 		color: var(--clr-black);
 		border: 1px solid var(--clr-light-gray);
 		border-radius: 2rem;
+		text-wrap: nowrap;
+	}
+	.login-button:hover {
+		border-color: var(--clr-black);
 	}
 	.login-button.principal-button {
 		background-color: var(--clr-principal);
@@ -36,7 +40,7 @@
 			color: var(--clr-principal);
 		}
 	}
-	div {
+	> div:not(.emerge-form) {
 		padding: 0 10%;
 	}
 }
@@ -58,30 +62,113 @@
 		color: var(--clr-black);
 	}
 	h1 {
-		font-size: 2.5rem;
-	}
-	h2 {
 		font-size: 2rem;
 	}
+	h2 {
+		font-size: 1.5rem;
+	}
 	form {
-		display: grid;
-		grid-template-columns: auto auto;
-		gap: 0.5rem;
-		align-items: center;
-		label {
-			grid-column: 1 / span 1;
-			text-align: end;
-		}
+		display: flex;
+		flex-flow: column;
+		gap: 1rem;
 		input {
+			margin-top: 1.5rem;
+
 			height: 1.25rem;
-			border: 0.5px solid rgb(0, 0, 0, 0.2);
+			border: none;
+			width: 100%;
+			background: transparent;
+			overflow: hidden;
 		}
-		button {
-			grid-column: 1 / -1;
-			align-self: center;
-			justify-self: center;
-			background-color: #29004b;
-			color: white;
+		input:hover,
+		input:focus {
+			outline: none;
+		}
+		.input-container:not(:has(:placeholder-shown)) {
+			label {
+				top: 0.5rem;
+				transform: translateY(0);
+				font-size: 0.75rem;
+			}
+		}
+		.input-container:has(input.bad-input) {
+			border-color: var(--clr-error);
+		}
+		.input-container:focus-within:has(input.bad-input) {
+			outline-color: var(--clr-error);
+		}
+		.input-container {
+			padding: 0.5rem 1rem;
+			border: 1px solid var(--clr-light-gray);
+			border-radius: 0.25rem;
+			position: relative;
+			overflow: hidden;
+		}
+		.input-container:focus-within {
+			outline: 2px solid var(--clr-principal);
+			label {
+				color: var(--clr-principal);
+				top: 0.5rem;
+				transform: translateY(0);
+				font-size: 0.75rem;
+			}
+		}
+		label {
+			color: var(--clr-dark-gray);
+			position: absolute;
+			top: 50%;
+			left: 1rem;
+			transform: translateY(-50%);
+		}
+	}
+	.or {
+		display: flex;
+	}
+	.or::before {
+		content: "";
+		flex: 1;
+		margin: auto 1em;
+		height: 0;
+		border-top: solid var(--clr-light-gray) 1px;
+	}
+	.or::after {
+		content: "";
+		flex: 1;
+		margin: auto 1em;
+		height: 0;
+		border-top: solid var(--clr-light-gray) 1px;
+	}
+}
+
+.emerge-form {
+	min-height: 100vh;
+	min-width: 100vw;
+	background-color: #00000088;
+	position: fixed;
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	align-items: center;
+	.form-container {
+		background-color: var(--clr-white);
+		padding: 3.5rem 7rem;
+		padding-top: 1.5rem;
+		border-radius: 1.5rem;
+		height: fit-content;
+		position: relative;
+		.ex {
+			position: absolute;
+			top: 1rem;
+			left: 1rem;
+			padding: 0.1rem;
+		}
+		.ex:hover {
+			background-color: var(--clr-extra-light-gray);
+			border-radius: 100%;
+			outline: none;
+		}
+		.ex svg {
+			height: 2rem;
 		}
 	}
 }

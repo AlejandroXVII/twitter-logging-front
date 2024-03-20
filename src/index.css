@@ -131,13 +131,14 @@ body {
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	--clr: 273;
 	--clr-principal: #1da1f2;
-	--clr-principal-dark: #2a80b6;
+	--clr-principal-dark: rgb(83, 183, 245);
 	--clr-black: #14171a;
 	--clr-dark-gray: #657786;
 	--clr-light-gray: #aab8c2;
-	--clr-extra-light-gray: #e1e8ed;
+	--clr-extra-light-gray: #dedede;
 	--clr-white: #f5f8fa;
-
+	--clr-error: rgb(244, 33, 46);
+	
 	--little-shadow: 3px 3px 5px hsl(0, 0%, 0%, 0.2);
 	--medium-shadow: 5px 5px 5px hsl(0, 0%, 0%, 0.2);
 	--big-shadow: 10px 10px 5px hsl(0, 0%, 0%, 0.2);
@@ -164,7 +165,8 @@ body {
 			justify-content: center;
 		}
 		button:hover {
-			outline: 2px solid var(--clr-principal-dark);
+			outline: 2px solid var(--clr-black);
+			filter: brightness(0.92);
 		}
 		.savedBtn {
 			background: var(--clr-accept);
@@ -181,5 +183,8 @@ body {
 	}
 	.text-center {
 		text-align: center;
+	}
+	.icon {
+		height: 2rem;
 	}
 }
