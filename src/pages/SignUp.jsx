@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import "../styles/form.css";
+import "../styles/login.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import API_URL from "../assets/api-url";

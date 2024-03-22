@@ -1,36 +1,59 @@
-import "../styles/form.css";
-import { useState, useRef } from "react";
+import "../styles/login.css";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import API_URL from "../assets/api-url";
-import { Logo, GoogleIcon, ExIcon } from "../assets/icons";
+import { Logo, ExIcon } from "../assets/icons";
+import { GoogleLogin } from "@react-oauth/google";
+import { googleLogout, useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
 const Login = () => {
-	const [dialogState, setDialogState] = useState(true);
+	const [dialogState, setDialogState] = useState(false);
 	const [typeDialogState, setTypeDialogState] = useState("create-account");
 	const navigate = useNavigate();
 	const cookies = new Cookies(null, { path: "/" });
-	async function loginUser(e) {
-		// Default options are marked with *
-		const response = await fetch(API_URL + "/login", {
-			method: "POST",
-			headers: {
-				Accept: "application/json",
-				"Content-Type": "application/json",
-				"Set-Cookie": "name1=value1",
-			},
-			body: JSON.stringify({
-				username: e.username.value,
-				password: e.password.value,
-			}),
-		});
-		const jsonResponse = await response.json();
-		//response.headers.getSetCookie();
-		cookies.set("token", jsonResponse.token);
-		cookies.set("userID", jsonResponse.userID);
-		navigate("/");
-		return; // parses JSON response into native JavaScript objects
-	}
+	//SECTION IN TEST
+	const [user, setUser] = useState([]);
+	const [profile, setProfile] = useState([]);
+
+	const login = useGoogleLogin({
+		onSuccess: (codeResponse) => {
+			setUser(codeResponse), console.log(codeResponse);
+		},
+		onError: (error) => console.log("Login Failed:", error),
+	});
+
+	useEffect(() => {
+		if (user) {
+			axios
+				.get(
+					`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
+					{
+						headers: {
+							Authorization: `Bearer ${user.access_token}`,
+							Accept: "application/json",
+						},
+					}
+				)
+				.then((res) => {
+					setProfile(res.data);
+				})
+				.catch((err) => console.log(err));
+		}
+	}, [user]);
+
+	// log out function to log the user out of google and set the profile array to null
+	const logOut = () => {
+		googleLogout();
+		setProfile(null);
+	};
+	//END OF TEST *************
+
+	const handleLoginFailure = () => {
+		console.log("Login Failed");
+		// handle error
+	};
 	function openDialog(type) {
 		setTypeDialogState(type);
 		setDialogState(true);
@@ -44,10 +67,12 @@ const Login = () => {
 				<Logo class="logo" />
 				<h1>Happening now</h1>
 				<h2>Join today.</h2>
-				<button className="login-button">
-					<GoogleIcon class="button-icon" />
-					Sign up with Google
-				</button>
+				<div>
+					<GoogleLogin
+						onSuccess={login}
+						onError={handleLoginFailure}
+					/>
+				</div>
 				<p className="text-center or">or</p>
 				<button
 					className="login-button principal-button"
@@ -80,7 +105,10 @@ const Login = () => {
 					{typeDialogState === "create-account" ? (
 						<CreateAccount />
 					) : (
-						<SignIn />
+						<SignIn
+							handleLoginSuccess={handleLoginSuccess}
+							handleLoginFailure={handleLoginFailure}
+						/>
 					)}
 				</FormCard>
 			</div>
@@ -208,7 +236,7 @@ function CreateAccount() {
 	);
 }
 
-function SignIn() {
+function SignIn(prop) {
 	return (
 		<>
 			<h1>Sign in to twitter</h1>
@@ -218,10 +246,10 @@ function SignIn() {
 					e.preventDefault();
 				}}
 			>
-				<button className="login-button">
-					<GoogleIcon class="button-icon" />
-					Sign in with Google
-				</button>
+				<GoogleLogin
+					onSuccess={prop.handleLoginSuccess}
+					onError={prop.handleLoginFailure}
+				/>
 				<p className="text-center or">or</p>
 				<InputComponent>
 					<label htmlFor="username">Username</label>

@@ -86,9 +86,8 @@
 		}
 		.input-container:not(:has(:placeholder-shown)) {
 			label {
-				top: 0.5rem;
-				transform: translateY(0);
-				font-size: 0.75rem;
+				transform: translateY(0) scale(0.85);
+				left: 1rem;
 			}
 		}
 		.input-container:has(input.bad-input) {
@@ -108,17 +107,18 @@
 			outline: 2px solid var(--clr-principal);
 			label {
 				color: var(--clr-principal);
-				top: 0.5rem;
-				transform: translateY(0);
-				font-size: 0.75rem;
+				transform: translateY(0) scale(0.85);
+				left: 1rem;
 			}
 		}
 		label {
 			color: var(--clr-dark-gray);
 			position: absolute;
-			top: 50%;
+
 			left: 1rem;
-			transform: translateY(-50%);
+			transform: translateY(80%) scale(1);
+			transition: transform 0.25s ease-in-out;
+			transform-origin: left;
 		}
 	}
 	.or {

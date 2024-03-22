@@ -133,12 +133,12 @@ body {
 	--clr-principal: #1da1f2;
 	--clr-principal-dark: rgb(83, 183, 245);
 	--clr-black: #14171a;
-	--clr-dark-gray: #657786;
+	--clr-dark-gray: #536471;
 	--clr-light-gray: #aab8c2;
 	--clr-extra-light-gray: #dedede;
 	--clr-white: #f5f8fa;
 	--clr-error: rgb(244, 33, 46);
-	
+
 	--little-shadow: 3px 3px 5px hsl(0, 0%, 0%, 0.2);
 	--medium-shadow: 5px 5px 5px hsl(0, 0%, 0%, 0.2);
 	--big-shadow: 10px 10px 5px hsl(0, 0%, 0%, 0.2);
