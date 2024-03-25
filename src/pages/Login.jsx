@@ -1,54 +1,12 @@
 import "../styles/login.css";
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Cookies from "universal-cookie";
 import API_URL from "../assets/api-url";
 import { Logo, ExIcon } from "../assets/icons";
 import { GoogleLogin } from "@react-oauth/google";
-import { googleLogout, useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
 
-const Login = () => {
+const Login = (prop) => {
 	const [dialogState, setDialogState] = useState(false);
 	const [typeDialogState, setTypeDialogState] = useState("create-account");
-	const navigate = useNavigate();
-	const cookies = new Cookies(null, { path: "/" });
-	//SECTION IN TEST
-	const [user, setUser] = useState([]);
-	const [profile, setProfile] = useState([]);
-
-	const login = useGoogleLogin({
-		onSuccess: (codeResponse) => {
-			setUser(codeResponse), console.log(codeResponse);
-		},
-		onError: (error) => console.log("Login Failed:", error),
-	});
-
-	useEffect(() => {
-		if (user) {
-			axios
-				.get(
-					`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
-					{
-						headers: {
-							Authorization: `Bearer ${user.access_token}`,
-							Accept: "application/json",
-						},
-					}
-				)
-				.then((res) => {
-					setProfile(res.data);
-				})
-				.catch((err) => console.log(err));
-		}
-	}, [user]);
-
-	// log out function to log the user out of google and set the profile array to null
-	const logOut = () => {
-		googleLogout();
-		setProfile(null);
-	};
-	//END OF TEST *************
 
 	const handleLoginFailure = () => {
 		console.log("Login Failed");
@@ -58,6 +16,7 @@ const Login = () => {
 		setTypeDialogState(type);
 		setDialogState(true);
 	}
+
 	return (
 		<div className="container login-container">
 			<div className="big-logo">
@@ -69,8 +28,9 @@ const Login = () => {
 				<h2>Join today.</h2>
 				<div>
 					<GoogleLogin
-						onSuccess={login}
-						onError={handleLoginFailure}
+						onSuccess={prop.login}
+						onError={(err) => console.log("fail", err)}
+						onFailure={(err) => console.log("fail", err)}
 					/>
 				</div>
 				<p className="text-center or">or</p>
@@ -106,7 +66,7 @@ const Login = () => {
 						<CreateAccount />
 					) : (
 						<SignIn
-							handleLoginSuccess={handleLoginSuccess}
+							handleLoginSuccess={prop.login}
 							handleLoginFailure={handleLoginFailure}
 						/>
 					)}
@@ -134,8 +94,35 @@ function FormCard(prop) {
 function CreateAccount() {
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
+	const [emailExists, setEmailExists] = useState(null);
+	const [usernameExists, setUsernameExists] = useState(null);
+
+	async function checkDataExistence(type, data) {
+		const response = await fetch(
+			API_URL + "/users/exists/" + type + "/" + data
+		);
+		const responseJson = await response.json();
+		if (type === "email") {
+			setEmailExists(responseJson.exists);
+		} else if (type === "username") {
+			setUsernameExists(responseJson.exists);
+		}
+	}
 	async function registerUser(e) {
-		// Default options are marked with *
+		// Check if email exists
+		await checkDataExistence("email", e.email.value);
+		if (emailExists) {
+			console.log("email exist already");
+			return;
+		}
+
+		// Check if username exists
+		await checkDataExistence("username", e.username.value);
+		if (usernameExists) {
+			console.log("username exist already");
+			return;
+		}
+
 		if (password === confirmPassword) {
 			await fetch(API_URL + "/users", {
 				method: "POST",
@@ -144,16 +131,18 @@ function CreateAccount() {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					full_name: e.full_name.value,
+					first_name: e.first_name.value,
+					last_name: e.last_name.value,
 					username: e.username.value,
 					email: e.email.value,
 					password: e.password.value,
+					sign_up_method: "email",
 				}),
 			});
-			prop.setDialogState(false);
 			return; // parses JSON response into native JavaScript objects
 		}
 	}
+
 	return (
 		<>
 			<h1>Create your account</h1>
@@ -237,6 +226,25 @@ function CreateAccount() {
 }
 
 function SignIn(prop) {
+	async function loginUser(e) {
+		// Default options are marked with *
+		const response = await fetch(API_URL + "/login", {
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				"Set-Cookie": "name1=value1",
+			},
+			body: JSON.stringify({
+				email: e.email.value,
+				password: e.password.value,
+			}),
+		});
+		const jsonResponse = await response.json();
+		//SAVE THE SESSION
+		//...
+		return jsonResponse; // parses JSON response into native JavaScript objects
+	}
 	return (
 		<>
 			<h1>Sign in to twitter</h1>
@@ -244,6 +252,7 @@ function SignIn(prop) {
 				action="POST"
 				onSubmit={(e) => {
 					e.preventDefault();
+					loginUser(e.target);
 				}}
 			>
 				<GoogleLogin
@@ -252,13 +261,8 @@ function SignIn(prop) {
 				/>
 				<p className="text-center or">or</p>
 				<InputComponent>
-					<label htmlFor="username">Username</label>
-					<input
-						name="username"
-						type="text"
-						placeholder=" "
-						required
-					/>
+					<label htmlFor="email">Email</label>
+					<input name="email" type="text" placeholder=" " required />
 				</InputComponent>
 				<InputComponent>
 					<label htmlFor="password">Password</label>
